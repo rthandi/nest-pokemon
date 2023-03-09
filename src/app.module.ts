@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { PokemonController } from './pokemon/pokemon.controller';
 
 @Module({
-  imports: [],
   controllers: [AppController, PokemonController],
   providers: [AppService],
 })
