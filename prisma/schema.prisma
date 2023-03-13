@@ -11,7 +11,23 @@ datasource db {
 }
 
 model Pokemon {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  level Int    @default(1)
+  id    String           @id @default(cuid())
+  name  String           @unique
+  level Int              @default(1)
+  types PokemonOnTypes[]
+}
+
+model Type {
+  id      String           @id @default(cuid())
+  name    String           @unique
+  pokemon PokemonOnTypes[]
+}
+
+model PokemonOnTypes {
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId String
+  type      Type    @relation(fields: [typeId], references: [id])
+  typeId    String
+
+  @@id([pokemonId, typeId])
 }
