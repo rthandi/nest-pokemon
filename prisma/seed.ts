@@ -61,6 +61,9 @@ async function main() {
         connect: [{ id: fireType.id }],
       },
     },
+    include: {
+      types: true,
+    },
   });
 
   await prisma.pokemon.upsert({
@@ -71,6 +74,9 @@ async function main() {
       types: {
         connect: [{ id: waterType.id }],
       },
+    },
+    include: {
+      types: true,
     },
   });
 }

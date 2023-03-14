@@ -6,6 +6,10 @@ export class PokemonService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.pokemon.findMany();
+    return this.prisma.pokemon.findMany({
+      include: {
+        types: true,
+      },
+    });
   }
 }
