@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const fireType = await prisma.type.upsert({
+  await prisma.type.upsert({
     where: { name: 'fire' },
     update: {},
     create: {
@@ -14,7 +14,7 @@ async function main() {
     },
   });
 
-  const waterType = await prisma.type.upsert({
+  await prisma.type.upsert({
     where: { name: 'water' },
     update: {},
     create: {
@@ -22,7 +22,7 @@ async function main() {
     },
   });
 
-  const grassType = await prisma.type.upsert({
+  await prisma.type.upsert({
     where: { name: 'grass' },
     update: {},
     create: {
@@ -30,7 +30,7 @@ async function main() {
     },
   });
 
-  const poisonType = await prisma.type.upsert({
+  await prisma.type.upsert({
     where: { name: 'poison' },
     update: {},
     create: {
@@ -44,11 +44,8 @@ async function main() {
     create: {
       name: 'bulbasaur',
       types: {
-        connect: [{ id: grassType.id }, { id: poisonType.id }],
+        connect: [{ name: 'grass' }, { name: 'poison' }],
       },
-    },
-    include: {
-      types: true,
     },
   });
 
@@ -58,11 +55,8 @@ async function main() {
     create: {
       name: 'charmander',
       types: {
-        connect: [{ id: fireType.id }],
+        connect: [{ name: 'fire' }],
       },
-    },
-    include: {
-      types: true,
     },
   });
 
@@ -72,11 +66,8 @@ async function main() {
     create: {
       name: 'squirtle',
       types: {
-        connect: [{ id: waterType.id }],
+        connect: [{ name: 'water' }],
       },
-    },
-    include: {
-      types: true,
     },
   });
 }
