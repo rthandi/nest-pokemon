@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { Pokemon } from './pokemon';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Pokemon } from '@prisma/client';
 import { PokemonService } from './pokemon.service';
 
 @Controller('pokemon')
@@ -8,5 +8,10 @@ export class PokemonController {
   @Get()
   findAll(): Promise<Pokemon[]> {
     return this.pokemonService.findAll();
+  }
+
+  @Post()
+  create(@Body() name: string, types: string[]): Promise<Pokemon> {
+    return this.pokemonService.create(name, types);
   }
 }
