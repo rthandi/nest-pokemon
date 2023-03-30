@@ -3,6 +3,7 @@ import { PokemonModule } from './pokemon.module';
 import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
 import * as request from 'supertest';
+import { PokemonDto } from './pokemon.dts';
 
 describe('Pokemon', () => {
   let app: INestApplication;
@@ -31,11 +32,12 @@ describe('Pokemon', () => {
       },
     });
 
+    const pokemon = new PokemonDto({ name: 'Pikachu', types: ['electric'] });
+
     const response = await request(app.getHttpServer())
       .post('/pokemon')
-      .send({ name: 'Pikachu', types: ['electric'] });
+      .send(pokemon);
 
-    console.log(response.body);
     expect(response.status).toEqual(201);
 
     const results = await prisma.pokemon.findMany({

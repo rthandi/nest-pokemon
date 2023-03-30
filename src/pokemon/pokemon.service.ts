@@ -19,7 +19,7 @@ export class PokemonService {
       data: {
         name: pokemon.name,
         types: {
-          connect: pokemon.types.map((type) => ({ name: type })),
+          connect: pokemon.types,
         },
       },
     });
