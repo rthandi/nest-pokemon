@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Pokemon } from '@prisma/client';
+import { PokemonDto } from './pokemon.dts';
 
 @Injectable()
 export class PokemonService {
@@ -14,12 +14,12 @@ export class PokemonService {
     });
   }
 
-  create(name: string, types: string[]) {
+  create(pokemon: PokemonDto) {
     return this.prisma.pokemon.create({
       data: {
-        name: name,
+        name: pokemon.name,
         types: {
-          connect: types.map((type) => ({ name: type })),
+          connect: pokemon.types.map((type) => ({ name: type })),
         },
       },
     });
