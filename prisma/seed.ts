@@ -6,37 +6,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.type.upsert({
-    where: { name: 'fire' },
-    update: {},
-    create: {
-      name: 'fire',
-    },
-  });
+  const types = ['fire', 'water', 'grass', 'poison'];
 
-  await prisma.type.upsert({
-    where: { name: 'water' },
-    update: {},
-    create: {
-      name: 'water',
-    },
-  });
-
-  await prisma.type.upsert({
-    where: { name: 'grass' },
-    update: {},
-    create: {
-      name: 'grass',
-    },
-  });
-
-  await prisma.type.upsert({
-    where: { name: 'poison' },
-    update: {},
-    create: {
-      name: 'poison',
-    },
-  });
+  for (const type of types) {
+    await prisma.type.upsert({
+      where: { name: type },
+      update: {},
+      create: { name: type },
+    });
+  }
 
   await prisma.pokemon.upsert({
     where: { name: 'bulbasaur' },
