@@ -1,29 +1,26 @@
+name: Semgrep
+
 on:
   pull_request: {}
   push:
-    branches:
-    - main
-    - master
-    paths:
-    - .github/workflows/semgrep.yml
-  schedule:
-  # random HH:MM to avoid a load spike on GitHub Actions at 00:00
-  - cron: 59 16 * * *
-name: Semgrep
+    branches: ["master", "main"]
+
 jobs:
   semgrep:
     name: Scan
-    runs-on: ubuntu-20.04
-    env:
-      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-    container:
-      image: returntocorp/semgrep
-    steps:
-    - uses: actions/checkout@v3
-    - run: semgrep ci
-    - run: yarn start
-    - name: OWASP ZAP Full Scan
-      uses: zaproxy/action-full-scan@v0.4.0
-      with:
-        target: http://localhost:3000/
+    runs-on: ubuntu-latest
 
+    container:
+      # A Docker image with Semgrep installed. Do not change this.
+      image: returntocorp/semgrep
+
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      - uses: actions/checkout@v3
+      # Run the "semgrep ci" command on the command line of the docker image.
+      - run: semgrep ci
+        env:
+           # Add the rules that Semgrep uses by setting the SEMGREP_RULES environment variable. 
+           SEMGREP_RULES: p/default # more at semgrep.dev/explore
