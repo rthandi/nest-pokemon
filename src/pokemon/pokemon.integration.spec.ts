@@ -1,4 +1,4 @@
-import { INestApplication, Injectable } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { PokemonModule } from './pokemon.module';
 import { Test } from '@nestjs/testing';
 import { PrismaClient } from '@prisma/client';
