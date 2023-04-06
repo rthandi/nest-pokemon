@@ -22,3 +22,12 @@ model Type {
   name    String    @unique
   pokemon Pokemon[]
 }
+
+model EndpointStatistics {
+  id         String   @id @default(cuid())
+  timestamp  DateTime @default(now())
+  methodName String
+  path       String
+  args       String
+  body       String
+}

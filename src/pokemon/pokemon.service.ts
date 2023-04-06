@@ -24,4 +24,19 @@ export class PokemonService {
       },
     });
   }
+
+  findType(type: string) {
+    return this.prisma.pokemon.findMany({
+      where: {
+        types: {
+          some: {
+            name: type,
+          },
+        },
+      },
+      include: {
+        types: true,
+      },
+    });
+  }
 }
